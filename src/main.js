@@ -2,8 +2,12 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import axios from 'axios'
 
 Vue.config.productionTip = false
+
+// 这样就可以全局使用 axios 了
+Vue.prototype.$axios = axios;
 
 new Vue({
   router,
