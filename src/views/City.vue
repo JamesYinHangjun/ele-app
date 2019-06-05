@@ -5,19 +5,26 @@
               <i class="fa fa-search"></i>
               <input v-model="city_val" type="text" placeholder="输入城市名">
           </div>
+
+          <!-- 点击 取消 按钮， 回到 Address.vue 中 -->
           <button @click="$router.push({name: 'address',params:{city:city}})">取消</button>
       </div>
 
+      <!-- 当搜索框中，没有输入值时  v-if="searchList.length == 0"-->
       <div style="height:100%" v-if="searchList.length == 0">
           <div class="location">
               <Location @click="selectCity({name:city})" :address="city"/>
           </div>
+          <!-- 字母表 -->
+          <!-- 这里调用Alphabet.vue中的 selectCity 方法 -->
           <Alphabet @selectCity="selectCity" ref="allcity" :cityInfo="cityInfo" :keys="keys"/>
       </div>
 
       <!-- 这里显示 输入 关键字然后相关城市 显示在页面的功能 -->
+      <!-- 这里用 v-else 是因为当输入 关键字搜索后，页面其他的 内容都没有了，只出来了 关键字 相关的内容 -->
       <div class="search_list" v-else>
           <ul>
+              <!-- 点击跳转到 Address.vue 中 -->
               <li @click="selectCity(item)" v-for="(item,index) in searchList" :key="index">
                   {{item.name}}
               </li>
@@ -34,18 +41,19 @@ export default {
     data() {
         return {
             city_val: "",
-            cityInfo: null,
-            keys:[],
-            allCities: [],
-            searchList: []
+            cityInfo: null,   // 用来 存储 得到的城市数据,包括 0,1,2.。
+            keys:[],          // 填写A-Z 和 hotCities 的 key
+            allCities: [],    // 存放 所有的城市
+            searchList: []    // 搜索框中 搜索的 值 放进去
         }
     },
     computed: {
         city() {
-            // 获取城市或者省份
+            // 获取城市或者省份  从 Home.vue 中 拷贝的
             return this.$store.getters.location.addressComponent.city || this.$store.getters.location.addressComponent.province;
         }
     },
+    // 一进入 City.vue这个页面，就进行一个对 城市 的请求
     created() {
         this.getCityInfo();
     },
@@ -62,10 +70,10 @@ export default {
                 // console.log(res.data);
                 this.cityInfo = res.data;
 
-                // 处理 key
+                // 处理 key,计算 key
                 this.keys = Object.keys(res.data);
 
-                // hotCities 这个 可以 移除掉
+                // hotCities 这个 key 移除掉
                 this.keys.pop();       // 最后一个
 
                 // keys 排序
@@ -77,10 +85,10 @@ export default {
 
                  // 存储所有城市， 用来搜索遍历
                  this.keys.forEach(key => {
-                     // console.log(key);
+                     // console.log(key);     得到 A- Z
                      //获取到 所有的城市， 然后把结果给 allCities
                      this.cityInfo[key].forEach(city => {
-                         // console.log(city);
+                         // console.log(city);    得到所有普城市 如 安庆 鞍山。。
                          this.allCities.push(city);
 
                      })
@@ -93,10 +101,11 @@ export default {
 
         selectCity(city) {
             // console.log(city);
-            // 得到的值 返回到 address 中去
+            // 把得到的值(城市) 返回到 address 中去
             this.$router.push({name:"address",params: {city: city.name} });
         },
 
+        // 输入框中输入关键字，查询城市   比如 输入 上， 出现 上海 上饶等
         searchCity() {
             if(!this.city_val) {
                 // 如果搜索框为空，数组置 空

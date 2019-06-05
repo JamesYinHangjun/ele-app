@@ -1,10 +1,12 @@
 <template>
+    <!-- 先判断 是否存在城市 v-if="cityInfo" -->
   <div class="area" v-if="cityInfo" ref="area_scroll">
       <div class="scroll_wrap">
           <!-- 热门城市 -->
           <div class="hot_wrap cityList">
               <div class="title">热门城市</div>
               <ul class="hot_city">
+                  <!-- 点击，去调用父级City.vue中的 selectCity,把当前点击的item传过去 -->
                   <li @click="$emit('selectCity',item)" v-for="(item,index) in cityInfo.hotCities" :key="index">
                       {{item.name}}
                   </li>
@@ -14,13 +16,14 @@
           <!-- 所有城市 -->
           <div class="city_wrap">
               <!-- 循环按照字母排序的 key -->
-              <div  class="city_content cityList" v-for="(item,index) in keys" :key="index">
+              <div  class="city_content citylist" v-for="(item,index) in keys" :key="index">
                   <div class="title">
                       {{item}}
                   </div>
 
                   <!-- 根据字母key 展示 城市名 -->
                   <ul>
+                      <!-- 这个方法和上面的热门城市的方法是一样的 -->
                       <li @click="$emit('selectCity',city)" v-for="(city,index) in cityInfo[item]" :key="index">
                           {{city.name}}
                       </li>
@@ -29,6 +32,7 @@
           </div>
       </div>
 
+      <!-- 这个是右边的字母 -->
       <div class="area_keys">
           <ul>
               <li @click="selectKey(0)">#</li>
@@ -59,9 +63,9 @@ export default {
         },
         selectKey(index) {
             // console.log(index);
-            // console.log(this.$refs.area_scroll.getElementsByClassName("cityList"));
+            // console.log(this.$refs.area_scroll.getElementsByClassName("citylist"));
 
-            const citylist = this.$refs.area_scroll.getElementsByClassName("cityList");
+            const citylist = this.$refs.area_scroll.getElementsByClassName("citylist");
 
             // 根据下标， 滚动到相应的元素上
             let el = citylist[index];

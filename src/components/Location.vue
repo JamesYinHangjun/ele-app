@@ -3,6 +3,7 @@
         <div class="title">
             当前定位
         </div>
+        <!-- 这个定义的方法，传到Address.vue组件中 -->
         <div class="des" @click="$emit('click')">
             <i class="fa fa-location-arrow"></i>
             <span>{{address}}</span>
