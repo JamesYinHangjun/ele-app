@@ -1,9 +1,9 @@
-<template>
+<template> 
 <!-- 该组件 是 商家的组件 -->
     <!-- 最外层表示下面 整页的 商家页面 -->
     <section class="index-container">
         <!-- 这层 div 表示 每一个 商家 所包括的信息 -->
-        <div class="index-shopInfo">
+        <div class="index-shopInfo" @click="$router.push('/shop')">
             <!-- 左侧图片 -->
             <div class="logo_container">
                 <img :src="restaurant.image_path" alt="">

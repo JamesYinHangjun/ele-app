@@ -20,7 +20,9 @@
                 </div>
             </div>
             <div v-else>
-                <SearchIndex @click="shopItemClick" :data="result.restaurants"/>
+                <!-- 将@click="shopItemClick" 改为 @click="$router.push('/shop')" -->
+                <!-- 点击商家的时候才跳转到shop -->
+                <SearchIndex @click="$router.push('/shop')" :data="result.restaurants"/>
                 <SearchIndex @click="shopItemClick" :data="result.words"/>
             </div>
         </div>
