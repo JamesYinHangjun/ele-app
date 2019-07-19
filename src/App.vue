@@ -7,7 +7,7 @@
 <script>
 export default {
     name: 'app',
-    // 让当前项目一进来就获取地位，所以在create() 中定义
+    // 让当前项目一进来就获取定位，所以在create() 中定义
     created() {
         this.getLocation();
     },
@@ -38,7 +38,7 @@ export default {
                 // 定位出错               非精准定位
                 // console.log(data);
 
-                // 因为pc端没有gps，所以会有5%的失败率，
+                // 因为pc端没有gps，所以大概会有5%的失败率，
                 // 没有精准定位成功的，执行 getLngLatLocation() 方法
                 self.getLngLatLocation();
               }
@@ -60,12 +60,13 @@ export default {
                         city: result.adcode
                       });
 
+                      // 获取到经纬度
                       var lnglat = result.rectangle.split(";")[0].split(",");
 
                       geocoder.getAddress(lnglat, function(status, data) {
                         if (status === 'complete' && data.info === 'OK') {
                             // result为对应的地理位置详细信息
-                            console.log(data);//
+                            // console.log(data);
                             self.$store.dispatch("setLocation", {
                                 addressComponent: {
                                     city: result.city,

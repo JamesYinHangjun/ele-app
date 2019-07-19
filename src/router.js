@@ -3,7 +3,7 @@ import Router from 'vue-router'
 // import Index from './views/index.vue'
 
 Vue.use(Router)
-
+  
 const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
@@ -76,11 +76,22 @@ const router = new Router({
               component: () => import("./views/Shops/Seller.vue"),
           }
       ]
+    },
+    {
+      path: '/myAddress',
+      name: 'myAddress',
+      component: () => import("./views/Orders/MyAddress.vue")
+    },
+    {
+      path: '/addAddress',
+      name: 'addAddress',
+      component: () => import("./views/Orders/AddAddress.vue")
     }
   ]
 });
 
 // 路由守卫(除了login ,其他乱写的url 都不能访问, 全部会访问 login)
+// ele_login 控制登陆状态的，true via表示登陆状态
 router.beforeEach((to,from,next) => {
     const isLogin = localStorage.ele_login ? true : false;
     if(to.path == '/login') {

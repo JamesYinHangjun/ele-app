@@ -34,7 +34,7 @@ const mutations = {
         if(address) {
             state.address = address;
         } else {
-            state.address = null;
+            state.address = "";
         }
     }
 }

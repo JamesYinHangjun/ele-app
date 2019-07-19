@@ -72,8 +72,15 @@ export default {
                 code: this.verifyCode
             })
             .then(res => {
+                // console.log(res.data)
+
                 // 检验成功， 设置登录状态并且跳转到  / 页面
-                localStorage.setItem("ele_login",true);
+                // localStorage.setItem("ele_login",true);
+                
+                // 登陆后每个用户都会拿到一个userId，这个userId用来请求接口
+                // 比如说在me.vue中，通过这个userId请求地址
+
+                localStorage.setItem("ele_login",res.data.user._id);
                 this.$router.push("/");
             })
             .catch(err => {
@@ -83,10 +90,12 @@ export default {
                 }
             })
         },
+
+        // 获取验证码
         getVerifyCode() {
             // 先判断手机号
             if(this.validatePhone()) {
-                this.validateBtn();
+                this.validateBtn();            // 倒计时设置
                 //如果手机号合法， 就发送网络请求
                 this.$axios.post("/api/posts/sms_send", {
                     tpl_id: "150442",
@@ -116,7 +125,7 @@ export default {
         },
         // 验证手机号合法
         validatePhone() {
-            if(!this.phone) {
+            if(!this.phone) {                   // 手机号没填
                 this.errors = {
                     phone: "手机号码不能为空"
                 };
@@ -141,7 +150,7 @@ export default {
 <style scoped>
 .login {
     width: 100%;
-    height: 100%;
+    height: 100%; 
     padding: 30px;
     box-sizing: border-box;
     background: #fff;

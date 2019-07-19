@@ -1,19 +1,16 @@
 <template>
   <div class="index">
-      <!-- 有三个子路由，Home.vue Me.vue Order.vue -->
+      <!-- 有三个子路由，Home.vue  Me.vue  Order.vue -->
       <!-- 占坑 -->
       <router-view></router-view>
-      <TabBar :data="tabbarData"/>
+      <TabBar :data="tabbarData"/> 
   </div>
 </template>
-
+  
 <script>
 import TabBar from "../components/TabBar";
 export default {
     name: "index",
-    components: {
-        TabBar
-    },
     data() {
         return {
             tabbarData: [
@@ -22,6 +19,9 @@ export default {
                 {title: "我的",icon: "user",path: "/me"}
             ]
         }
+    },
+    components: {
+        TabBar
     }
 }
 </script>
@@ -29,6 +29,7 @@ export default {
 <style scoped>
 .index {
   width: 100%;
+  /* 减掉的45px是TabBar的高度(它是固定的) */
   height: calc(100% - 45px);
 }
 </style>

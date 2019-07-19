@@ -17,8 +17,10 @@
           <!-- 输入框后面的按钮 -->
           <!-- 当传入 btnTitle 时，会显示按钮 -->
           <!-- disabled是控制按钮点击的，当点击了按钮获取验证码后，在多少秒之内是不能再次点击按钮的 -->
+          <!-- 当点击按钮后，会触发btnClick这个函数，这个函数传到父组件Login.vue中实现 -->
           <button v-if="btnTitle" :disabled="disabled" @click="$emit('btnClick')">{{btnTitle}}</button>
       </div>
+
       <!-- 验证码错误提醒 -->
       <!-- 当点击登录按钮后，提醒验证码错误 -->
       <!-- 当定义的 error 出现，就出现这个 div -->
@@ -40,8 +42,8 @@ export default {
         value: String,
         placeholder: String,
         name: String,
-        btnTitle: String,           // 拥不拥有获取验证码的
-        disabled: Boolean,
+        btnTitle: String,           // 拥不拥有获取验证码的,按钮名称
+        disabled: Boolean,          // 当前的按钮是否可用
         error: String
     }
 }

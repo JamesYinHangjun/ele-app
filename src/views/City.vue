@@ -1,5 +1,6 @@
 <template>
   <div class="city">
+      <!-- 最上面一行: 搜索框和取消按钮 -->
       <div class="search_wrap">
           <div class="search">
               <i class="fa fa-search"></i>
@@ -9,6 +10,7 @@
           <!-- 点击 取消 按钮， 回到 Address.vue 中 -->
           <button @click="$router.push({name: 'address',params:{city:city}})">取消</button>
       </div>
+
 
       <!-- 当搜索框中，没有输入值时  v-if="searchList.length == 0"-->
       <div style="height:100%" v-if="searchList.length == 0">
@@ -20,7 +22,7 @@
           <Alphabet @selectCity="selectCity" ref="allcity" :cityInfo="cityInfo" :keys="keys"/>
       </div>
 
-      <!-- 这里显示 输入 关键字然后相关城市 显示在页面的功能 -->
+      <!-- 这里显示输入关键字然后相关城市 显示在页面的功能 -->
       <!-- 这里用 v-else 是因为当输入 关键字搜索后，页面其他的 内容都没有了，只出来了 关键字 相关的内容 -->
       <div class="search_list" v-else>
           <ul>
@@ -44,7 +46,7 @@ export default {
             cityInfo: null,   // 用来 存储 得到的城市数据,包括 0,1,2.。
             keys:[],          // 填写A-Z 和 hotCities 的 key
             allCities: [],    // 存放 所有的城市
-            searchList: []    // 搜索框中 搜索的 值 放进去
+            searchList: []    // 搜索框中 搜索出阿里的 值 放进去，比如说搜索 上 ，出来关于上的城市全部存进去
         }
     },
     computed: {
@@ -58,12 +60,14 @@ export default {
         this.getCityInfo();
     },
     watch: {
+            // 在获取到所有城市之后监听
             city_val() {
                 // console.log(this.city_val);
                 this.searchCity();
             }
     },
     methods: {
+        // 获取城市的信息
         getCityInfo() {
             this.$axios("/api/posts/cities")
             .then(res => {
@@ -71,14 +75,19 @@ export default {
                 this.cityInfo = res.data;
 
                 // 处理 key,计算 key
+                // 得到res.data 中所有的keys ，包括A-Z和hotCities
                 this.keys = Object.keys(res.data);
+                // console.log(this.keys);
 
                 // hotCities 这个 key 移除掉
                 this.keys.pop();       // 最后一个
 
                 // keys 排序
-                 this.keys.sort();
+                this.keys.sort();
+                // console.log(this.keys);
 
+                // 数据请求完成之后执行
+                // this.$refs.allcity指的是 Alphabet.vue组件
                  this.$nextTick( () => {
                      this.$refs.allcity.initScroll();
                  });
@@ -88,11 +97,11 @@ export default {
                      // console.log(key);     得到 A- Z
                      //获取到 所有的城市， 然后把结果给 allCities
                      this.cityInfo[key].forEach(city => {
-                         // console.log(city);    得到所有普城市 如 安庆 鞍山。。
+                         // console.log(city);    得到所有的城市 如 安庆 鞍山。。
                          this.allCities.push(city);
 
                      })
-                 })
+                 });
             })
             .catch(err => {
                 // console.log(err);
@@ -117,7 +126,7 @@ export default {
                 });
 
                 // console.log(this.searchList);
-                // 这时已经得到了数据，  比如输入一个 上 字， 会出现23个结果，这时只要把结果显示到页面上就可一乐
+                // 这时已经得到了数据，  比如输入一个 上 字， 会出现12个结果，这时只要把结果显示到页面上就可以了
             }
         }
     },
@@ -165,6 +174,7 @@ export default {
   outline: none;
   color: #009eef;
 }
+
 
 .location {
   background: #fff;

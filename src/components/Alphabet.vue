@@ -3,10 +3,11 @@
   <div class="area" v-if="cityInfo" ref="area_scroll">
       <div class="scroll_wrap">
           <!-- 热门城市 -->
-          <div class="hot_wrap cityList">
+          <div class="hot_wrap citylist">
               <div class="title">热门城市</div>
               <ul class="hot_city">
-                  <!-- 点击，去调用父级City.vue中的 selectCity,把当前点击的item传过去 -->
+                  <!-- 点击，把selectCity方法传到父级组件City.vue去,把当前点击的item传过去 -->
+                  <!-- selectCity方法实现的是点击哪个城市，然后Address.vue中的定位就变成哪个城市 -->
                   <li @click="$emit('selectCity',item)" v-for="(item,index) in cityInfo.hotCities" :key="index">
                       {{item.name}}
                   </li>
@@ -16,7 +17,7 @@
           <!-- 所有城市 -->
           <div class="city_wrap">
               <!-- 循环按照字母排序的 key -->
-              <div  class="city_content citylist" v-for="(item,index) in keys" :key="index">
+              <div class="city_content citylist" v-for="(item,index) in keys" :key="index">
                   <div class="title">
                       {{item}}
                   </div>
@@ -24,6 +25,7 @@
                   <!-- 根据字母key 展示 城市名 -->
                   <ul>
                       <!-- 这个方法和上面的热门城市的方法是一样的 -->
+                      <!-- 下面这个item指的是上面循环遍历的key -->
                       <li @click="$emit('selectCity',city)" v-for="(city,index) in cityInfo[item]" :key="index">
                           {{city.name}}
                       </li>
@@ -32,7 +34,7 @@
           </div>
       </div>
 
-      <!-- 这个是右边的字母 -->
+      <!-- 这个是右边的字母表 -->
       <div class="area_keys">
           <ul>
               <li @click="selectKey(0)">#</li>
@@ -47,7 +49,7 @@ import BScroll from "better-scroll";
 export default {
     name: "Alphabet",
     props: {
-        cityInfo: Object,
+        cityInfo: Object,     // 从 City.vue组件中传过来的
         keys: Array
     },
     data() {
@@ -56,7 +58,9 @@ export default {
         }
     },
     methods: {
+        // 这个方法 是在 city.vue中数据加载完成之后调用的
         initScroll() {
+            // 实例化的BScroll实例
             this.scroll = new BScroll(this.$refs.area_scroll, {
                 click: true
             })
@@ -70,7 +74,7 @@ export default {
             // 根据下标， 滚动到相应的元素上
             let el = citylist[index];
 
-            // 滚动到相应的位置上
+            // 滚动到相应的位置上,第一个参数是到哪个元素，第二个参数是时间
             this.scroll.scrollToElement(el,250);
         }
     }

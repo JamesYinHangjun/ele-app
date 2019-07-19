@@ -7,7 +7,7 @@
               <span>{{address}}</span>
               <i class="fa fa-sort-desc"></i>
           </div>
-
+   
           <!-- 将搜索框 放入下面的 search_wrap 容器中，是为了实现当向下滑动时，搜索框仍然在最上面 -->
           <!-- <div class="shop_search">
               <i class="fa fa-search"></i>
@@ -23,15 +23,16 @@
           </div>
       </div>
 
+        <!-- 搜索框下面的轮播图和分类 -->
       <div id="container">
-          <!-- 轮播 -->
+          <!-- 轮播 自动轮播-->
           <mt-swipe :auto="4000" class="swiper">
               <mt-swipe-item v-for="(img,index) in swipeImgs" :key="index">
                   <img :src="img" alt="">
               </mt-swipe-item>
           </mt-swipe>
 
-          <!-- 分类 -->
+          <!-- 分类 手动滑动-->
           <mt-swipe :auto="0" class="entries">
               <!-- 首先遍历的是 entries(首先是两页) -->
               <mt-swipe-item v-for="(entry,i) in entries" :key="i" class="entry_wrap">
@@ -44,7 +45,6 @@
                       <!-- 下面 字 -->
                       <span>{{item.name}}</span>
                   </div>
-
               </mt-swipe-item>
           </mt-swipe>
       </div>
@@ -87,7 +87,7 @@ export default {
     data() {
         return {
             swipeImgs: [],  // swipeImgs和entries 里面装的全是从 /api/profile/shopping中访问得到的内容
-            entries: [],
+            entries: [],    // 存放轮播图下面的分类的数据
             filterData: null,  //对象 存储 从 /api/profile/filter 得到的数据
             showFilter: false,  //控制搜索框 跑到最上面
 
@@ -99,8 +99,8 @@ export default {
             data: null
         }
     },
-    computed: {
-        // 将定位到的地点 通过 computed 获取到，然后放到收获地址 上
+    computed: { 
+        // 将定位到的地点 通过 computed 获取到，然后放到Address.vue中的地址定位上（收获地址） 下
         address() {
             return this.$store.getters.address;
         },
@@ -121,6 +121,7 @@ export default {
                 this.swipeImgs = res.data.swipeImgs;//存储轮播的四张图片
                 this.entries = res.data.entries;//存储轮播图下面的图片
             });
+            // 推荐商家下面的排序的内容
             this.$axios("/api/profile/filter").then(res => {
                 console.log(res.data);
                 this.filterData = res.data;

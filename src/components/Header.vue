@@ -14,6 +14,7 @@
 export default {
     name: "Header",
     props: {
+      // 从父组件 Address.vue传递下来的
         title: String,
         isLeft: {
             type: Boolean,
@@ -21,7 +22,7 @@ export default {
         }
     }
 }
-</script>
+</script> 
 
 <style scoped>
 .header {
