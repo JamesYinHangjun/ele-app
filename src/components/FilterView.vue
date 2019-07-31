@@ -1,6 +1,7 @@
 <template>
     <!-- isSort 表示点击了 综合排序。 isScreen 表示点击了筛选。 两个随便点击一个就显示蒙版-->
-     <div :class="{'open': isSort || isScreen}" @click.self="hideView">      <!-- 这层div 是显示蒙版的 @click.self="hideView"当点击自己时蒙版取消 -->
+     <!-- 这层div 是显示蒙版的 @click.self="hideView"当点击自己时蒙版取消 -->
+     <div :class="{'open': isSort || isScreen}" @click.self="hideView"> 
 
          <!-- 导航 -->
         <!-- 判断从父级传来的filterData 是否有内容，有的话 才展示 -->
@@ -25,7 +26,7 @@
                     <!-- :class="{'selectName':currentSort == index}"表示当选择谁时，谁的后面的√显示 -->
                     <!-- selectName类控制颜色 -->
                     <span
-                    :class="{'selectName':currentSort == index}" >{{item.name}}</span>
+                    :class="{'selectName':currentSort == index}">{{item.name}}</span>
                     <!-- i是勾号    -->
                     <i v-show="currentSort == index" class="fa fa-check"></i>
                 </li>
@@ -64,7 +65,7 @@ export default {
     data() {
         return {
             currentFilter: 0,  //更改下标,当前点击的 Filter(综合排序，距离最近等等)
-            isSort: false,    // 控制蒙版，点击时显示蒙版
+            isSort: false,    // 控制蒙版，正常情况下不显示，点击时显示蒙版
             currentSort: 0,    // 0表示综合排序
             isScreen: false
         }
@@ -88,9 +89,9 @@ export default {
         }
     },
     methods: {
-        // 该方法实现点击谁，谁加粗
+        // 该方法点击不同的排序，出现不同的效果
         filterSort(index) {
-            this.currentFilter = index;
+            this.currentFilter = index;   //实现点击谁，谁加粗
             switch(index) {
                 case 0:       // 当点击第一个（综合排序）时 显示蒙版
                     this.isSort = true;
@@ -113,16 +114,18 @@ export default {
                 case 3:      // 筛选
                     this.isScreen = true;
                     this.isSort = false;
-                    this.$emit("searchFixed",true);  // 点击筛选时，也跑到最上面
+                    this.$emit("searchFixed",true);  // 点击筛选时，搜索框也跑到最上面
                     break;
                 default:
                     this.hideView();
                     break;
             }
         },
+        // 点击 取消蒙版 
         hideView() {
             this.isSort = false;
             this.isScreen = false;
+            // 取消搜索框置顶
             this.$emit("searchFixed",false);
         },
         selectSort(item,index) {
@@ -224,6 +227,7 @@ export default {
   color: #333;
 }
 
+/* 显示的蒙版 */
 .open {
   position: fixed;
   top: 0;
@@ -235,6 +239,8 @@ export default {
   z-index: 3;
 }
 
+
+/* 点击综合排序出现的各种排序方法 */
 .filter-extend {
   background-color: #fff;
   color: #333;

@@ -4,8 +4,9 @@
     <div class="headInfo">
       <div class="head-img"></div>
       <div class="head-profile">
-        <!-- 当userInfo有值(也就是登陆状态时)，显示userId -->
+        <!-- 当userInfo有值(也就是登陆状态时)，显示userId那个页面 -->
         <p class="user-id" v-if="userInfo">{{userInfo._id}}</p>
+        <!-- 当userInfo没有值，也就是没有userId，则没有登录状态 -->
         <p class="user-id" v-else @click="handleLogin">登陆/注册</p>
         <p class="user-phone">
           <i class="fa fa-mobile"></i>
@@ -22,7 +23,7 @@
         <i class="fa fa-map-marker"></i>
         <div class="address-index" @click="myAddress">
           <span>我的地址</span>
-          <i class="fa fa-angle-riht"></i>  
+          <i class="fa fa-angle-right"></i>  
         </div>
       </div>
       <button @click="handleLogout" class="loginOut-btn">退出登陆</button>
@@ -72,7 +73,20 @@ export default {
         if(this.userInfo.myAddress.length > 0) {
           this.$router.push('/myAddress');
         } else {
-          this.$router.push('/addAddress');
+          this.$router.push({
+              name: 'addAddress',
+              params: {
+                title: '添加地址',
+                addressInfo: {
+                  name: '',
+                  sex: '',
+                  phone: '',
+                  address: '',
+                  bottom: '',
+                  tag: ''
+                }
+              }
+            });
         }
       }
     }

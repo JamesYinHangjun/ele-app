@@ -177,9 +177,11 @@ export default {
               })
             }
         },
+        // 这个 isShow是从FilterView.vue中searchFixed方法中 传过来的 参数
         showFilterView(isShow) {
             this.showFilter = isShow;
         },
+        // 修改排序规则
         update(condition) {
             // console.log(condition);
             this.data = condition;
@@ -300,7 +302,7 @@ export default {
   margin-left: 3.466667vw;
 }
 
-/* 搜索框中的,用来控制 当点击 综合排序(在 FilterView.vue中)时，搜索框跑到最上方 */
+/* 搜索框中的, 用来控制 当点击 综合排序(在 FilterView.vue中点击)时，搜索框跑到最上方 */
 .fixedview {
     width: 100%;
     position: fixed;

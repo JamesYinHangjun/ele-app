@@ -45,7 +45,7 @@
             <button class="submit-btn">
                 <!-- 当购物车为空的时候，有一个 "多少元起送" -->
                 <span v-if="isEmpty">￥{{shopInfo.rst.float_minimum_order_amount}}元起送</span>
-                <span v-else>去结算</span>
+                <span @click="settlement" v-else>去结算</span>
             </button>
         </div>
     </div>
@@ -113,6 +113,14 @@ export default {
                     item.count = 0
                 })
             })
+        },
+        // 点击进入结算页面(把选中的食物全部传到views/Shops/Settlement.vue组件中去)
+        settlement() {
+          this.$store.dispatch("setOrderInfo", {
+            shopInfo: this.shopInfo.rst,
+            selectFoods: this.selectFoods
+          })
+          this.$router.push("/settlement")
         }
     },
     components: {

@@ -1,4 +1,5 @@
 <template>
+    <!-- showSearch是从父组件views/Orders/AddAddress.vue传过来 -->
     <div v-if="showSearch" class="addressSearch">
         <div class="search-view">
             <div class="search-box">
@@ -7,8 +8,19 @@
                     <input type="text" placeholder="请输入小区/写字楼/学校等" v-model="search_address">
                 </div>
 
+                <!-- 点击取消进入添加地址页 -->
+                <!-- 父组件是views/Orders/AddAddress.vue -->
                 <button class="search-box-btn" @click="$emit('close')">取消</button>
             </div>
+
+            <!-- 这部分是显示地点搜索出来的相关信息 -->
+            <ul class="search-list">
+              <li v-for="(item,index) in areaList" :key="index" class="search-row"
+              @click="selectAddress(item)">
+                <p class="search-row-title">{{item.name}}</p>
+                <p class="search-row-location">{{item.district}}{{item.address}}</p>
+              </li>
+            </ul>
         </div>
     </div>
 </template>
@@ -18,11 +30,56 @@ export default {
     name: 'AddressSearch',
     data() {
         return {
-            search_address: ''
+            search_address: '',       // 要搜索的地点
+            areaList:[]               // 存储"地点搜索"相关的信息
         }
     },
     props: {
-        showSearch: Boolean       //控制什么情况下跳转过来
+        showSearch: Boolean,       //控制在"点击地址"时才跳转过来
+        addressInfo: Object
+    },
+    computed: {
+      city() {
+        return (
+          this.$store.getters.location.addressComponent.city || 
+          this.$store.getters.location.addressComponent.province
+        );
+      }
+    },
+    // 监听输入的值
+    watch: {
+      search_address(val) {     // val 是 输入的值
+        // console.log(val)
+        this.searchPlace(val)
+      }
+    },
+    methods: {
+      searchPlace(val) {
+        // console.log(this.city)
+
+        //调用高德地图的搜索
+        AMap.plugin('AMap.Autocomplete', () => {
+          // 实例化Autocomplete
+          var autoOptions = {
+            //city 限定城市，默认全国
+            // city: '全国'
+            city: this.city
+          }
+          var autoComplete= new AMap.Autocomplete(autoOptions);
+          autoComplete.search(val, (status, result) => {
+            // 搜索成功时，result即是对应的匹配数据
+            // console.log(result)  其中有个tips属性存储了相关地点
+            this.areaList = result.tips
+          })
+        })
+      },
+
+      selectAddress(item) {
+        // console.log(item)
+        this.addressInfo.address = item.name + item.district + item.address;
+        // 关闭这个页面
+        this.$emit("close")
+      }
     }
 }
 </script>

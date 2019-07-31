@@ -1,7 +1,9 @@
 <template>
+    <!-- 添加地址的表单 -->
     <div class="formblock">
         <div class="label-wrap">{{label}}</div>
-        <div class="input-group-wrap">
+        <!-- @click="$emit('click')"是给每一个组件都拥有点击事件 -->
+        <div class="input-group-wrap" @click="$emit('click')">
             <div class="input-wrap">
                 <!-- 当传的不是textarea -->
                 <input 
@@ -44,7 +46,7 @@ export default {
         placeholder: String,
         icon: String,
         textarea: String,
-        tags: Array,
+        tags: Array,           //从父组件views/Orders/AddAddres.vue传过来的
         sex: String
     },
     methods: {

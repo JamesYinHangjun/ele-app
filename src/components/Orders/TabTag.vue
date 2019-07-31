@@ -7,15 +7,15 @@
             :class="{'checked':selectTag == item}"
             @click="$emit('checkTag',item)"
         >{{item}}</span>
-    </div>
+    </div> 
 </template>
 
 <script>
 export default {
     name: 'TabTag',
     props: {
-        tags: Array,
-        selectTag: String       // 控制被选中 高亮显示
+        tags: Array,            // 从父组件views/Orders/AddAddress.vue传来的
+        selectTag: String       // 控制被选中 高亮显示(选中谁，谁就高亮)
     },
     // created() {
     //     console.log(this.tags)
