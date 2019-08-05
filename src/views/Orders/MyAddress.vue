@@ -98,7 +98,7 @@ export default {
           .then(res => {
             this.allAddress.splice(index,1)
           })
-        },
+        }, 
         // 点击选择地址
         setAddressInfo(address,index) {
           this.selectIndex = index

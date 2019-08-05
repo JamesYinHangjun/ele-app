@@ -18,6 +18,7 @@
             </aside>
         </div>
 
+
         <!-- 排序 点击综合排序后，出现很多种排序方法(好评优先，销量最高等等)-->
         <section class="filter-extend" v-if="isSort">
             <ul>
@@ -222,6 +223,7 @@ export default {
   will-change: transform;
 }
 
+/* 加粗 */
 .filter-bold {
   font-weight: 600;
   color: #333;
