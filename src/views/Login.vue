@@ -5,8 +5,9 @@
       </div>
 
       <!-- 手机号 -->
+      <!-- type表示input框的类型 -->
       <InputGroup
-        type="number"
+        type="number"              
         v-model="phone"
         placeholder="手机号"
         :btnTitle="btnTitle"
@@ -103,7 +104,7 @@ export default {
                     phone: this.phone              // 发送哪个手机号
                 })
                 .then(res => {
-                    console.log(res);
+                    // console.log(res);
                 })
             }
         },

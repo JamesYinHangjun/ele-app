@@ -26,20 +26,20 @@ export default {
 
 <style scoped>
 .header {
-  align-items: center;
   background-color: #009eef;
   box-sizing: border-box;
   color: #fff;
   display: flex;
+  align-items: center;
   font-size: 16px;
   height: 45px;
+  width: 100%;
   line-height: 1;
   padding: 0 10px;
   position: relative;
   text-align: center;
   white-space: nowrap;
   position: fixed;
-  width: 100%;
   top: 0;
   z-index: 99;
 }

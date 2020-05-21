@@ -35,8 +35,8 @@ export default {
     name: "inputGroup",
     // 这个组件是 login.vue 的子组件，接收从 login.vue 传递来的数据
     props: {
-        type: {
-            type: String,
+        type: {                      // input的类型
+            type: String,           
             default: "text"
         },
         value: String,

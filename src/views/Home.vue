@@ -69,6 +69,7 @@
         ref="loadmore"
         >
 
+        <!-- IndexShop 首页商家组件 -->
         <div class="shoplist">
             <IndexShop v-for="(item,index) in restaurants" :key="index"
             :restaurant = "item.restaurant"/>
@@ -115,6 +116,7 @@ export default {
     },
     methods: {
         getData() {
+            // 轮播图数据
             this.$axios('/api/profile/shopping').then(res => {
                 // console.log(res.data);  // 这个时候会得到四张图片，
                 // 然后把图片存储在 data 中的 swipeImgs 中
@@ -154,6 +156,7 @@ export default {
         },
         //上拉加载
         loadMore() {
+            // allLoaded表示是否全部加载完了
             if(!this.allLoaded) {
                 this.page++;
             // 拉取首页中 下面的 商家信息
@@ -161,6 +164,7 @@ export default {
             .then(res => {
                 // 加载完之后 重新渲染
                 this.$refs.loadmore.onBottomLoaded();
+                // 还有数据
                 if(res.data.length > 0) {
                     res.data.forEach(item => {
                         this.restaurants.push(item);
@@ -178,6 +182,7 @@ export default {
             }
         },
         // 这个 isShow是从FilterView.vue中searchFixed方法中 传过来的 参数
+        // 控制搜索框提到蒙版最上面 
         showFilterView(isShow) {
             this.showFilter = isShow;
         },
@@ -231,6 +236,7 @@ export default {
   color: #aaa;
 }
 
+/* 搜索框 */
 .search_wrap {
     position: sticky;
     top: 0px;

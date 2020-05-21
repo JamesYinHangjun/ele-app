@@ -2,16 +2,19 @@
 <!-- 该组件 是 商家的组件 -->
     <!-- 最外层表示下面 整页的 商家页面 -->
     <section class="index-container">
+
         <!-- 这层 div 表示 每一个 商家 所包括的信息 -->
         <div class="index-shopInfo" @click="$router.push('/shop')">
             <!-- 左侧图片 -->
             <div class="logo_container">
                 <img :src="restaurant.image_path" alt="">
             </div>
+
             <!-- 右侧内容 -->
             <div class="index_main">
                 <!-- 第一行 ： 品牌（有的有，有的没有，要判断) -->
                 <div class="index_shopname">
+                    <!-- 判断是否有品牌 -->
                     <i v-if="restaurant.is_premium">品牌</i>
                     <span>{{restaurant.name}}</span>
                 </div>
@@ -28,7 +31,7 @@
                         </div> -->
                         <Rating :rating="restaurant.rating" />
 
-                        <span clas="rate">{{restaurant.rating}}</span>
+                        <span class="rate">{{restaurant.rating}}</span>
                         <span>月售{{restaurant.recent_order_num}}单</span>
                     </div>
                     <!-- 判断有没有蜂鸟专送 -->
@@ -71,18 +74,23 @@ export default {
 </script>
 
 <style scoped>
+/* 最外层 */
 .index-container {
   background: #fff;
   color: #666;
   padding: 4vw 0;
   border-bottom: 0.133333vw solid #eee;
 }
+
+
+/* 每一个商家 */
 .index-shopInfo {
   display: flex;
   justify-content: flex-start;
   padding: 0 2.666667vw;
   align-items: stretch;
 }
+/* 左侧部分 */
 .logo_container {
   width: 17.333333vw;
   height: 17.333333vw;
@@ -95,6 +103,8 @@ export default {
   border: 0.133333vw solid rgba(0, 0, 0, 0.08);
   border-radius: 0.533333vw;
 }
+
+/* 右侧内容 */
 .index_main {
   display: flex;
   justify-content: space-between;
@@ -104,12 +114,14 @@ export default {
   font-size: 0.2rem;
   flex-grow: 1;
 }
+/* 右侧第一行 品牌部分 */
 .index_shopname {
   align-items: center;
   color: #333;
   font-weight: 700;
   font-size: 0.9rem;
 }
+/* 品牌两个字 */
 .index_shopname i {
   background: #ffe800;
   margin-right: 1.333333vw;
@@ -123,6 +135,8 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* 右侧第二行: 星级部分 */
 .index-rateWrap {
   display: flex;
   align-items: center;

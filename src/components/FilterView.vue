@@ -22,7 +22,8 @@
         <!-- 排序 点击综合排序后，出现很多种排序方法(好评优先，销量最高等等)-->
         <section class="filter-extend" v-if="isSort">
             <ul>
-                <li v-for="(item,index) in filterData.sortBy" :key="index" @click="selectSort(item,index)">
+                <li v-for="(item,index) in filterData.sortBy" :key="index" 
+                @click="selectSort(item,index)">
                     <!-- span 是排序名称 -->
                     <!-- :class="{'selectName':currentSort == index}"表示当选择谁时，谁的后面的√显示 -->
                     <!-- selectName类控制颜色 -->
@@ -35,11 +36,14 @@
         </section>
 
         <!-- 筛选 -->
+        <!-- 两层循环 -->
         <section class="filter-extend" v-if="isScreen">
             <div class="filter-sort">
                 <div v-for="(screen,index) in filterData.screenBy" :key="index" class="morefilter">
                     <p class="title">{{screen.title}}</p>
                     <ul>
+                        <!-- 这个selected类控制着点击每一项后变色 -->
+                        <!-- select是数据中的属性，当为false时，不变色 -->
                         <li v-for="(item,i) in screen.data" :key="i"
                         :class="{'selected':item.select}" @click="selectScreen(item,screen)">
                             <img v-if="item.icon" :src="item.icon" alt>
@@ -129,6 +133,7 @@ export default {
             // 取消搜索框置顶
             this.$emit("searchFixed",false);
         },
+        // 点击遍历排序方式
         selectSort(item,index) {
             this.currentSort = index;   // 点击 谁
             // 这句是实现 当点击谁，最上面的排序规则就变成了什么
@@ -143,6 +148,8 @@ export default {
         selectScreen(item,screen) {
             if(screen.id != "MPI") {     // MPI 的id是0，是多选
                 // 单选， 遍历 所有的选项，使其一开始状态为 false
+
+                // 如果是单选的话，点击了一项后，如果再点击其他的，会把所有的都变成false，这样原来选中的一项就变成未选中了，这样就实现了单选
                 screen.data.forEach(ele => {
                     ele.select = false
                 });
@@ -151,6 +158,7 @@ export default {
         },
         // 点击清空按钮 实现的功能
         clearFilter() {
+            // 遍历最外边的数据,然后使每一项下面的每一项的select变为false
             this.filterData.screenBy.forEach(screen => {
                 screen.data.forEach(item => {
                     item.select = false;

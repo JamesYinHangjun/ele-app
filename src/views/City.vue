@@ -15,6 +15,7 @@
       <!-- 当搜索框中，没有输入值时  v-if="searchList.length == 0"-->
       <div style="height:100%" v-if="searchList.length == 0">
           <div class="location">
+              <!-- city要传到location组件 -->
               <Location @click="selectCity({name:city})" :address="city"/>
           </div>
           <!-- 字母表 -->
@@ -44,7 +45,7 @@ export default {
         return {
             city_val: "",
             cityInfo: null,   // 用来 存储 得到的城市数据,包括 0,1,2.。
-            keys:[],          // 填写A-Z 和 hotCities 的 key
+            keys:[],          // 存储A-Z 和 hotCities 的 key
             allCities: [],    // 存放 所有的城市
             searchList: []    // 搜索框中 搜索出阿里的 值 放进去，比如说搜索 上 ，出来关于上的城市全部存进去
         }

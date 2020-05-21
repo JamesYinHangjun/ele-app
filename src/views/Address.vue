@@ -17,6 +17,7 @@
 
             <!-- Location -->
             <!-- 这个方法是从 Location.vue中传过来的 -->
+            <!-- 这个address是用计算属性从vuex中取出来的，传到Location中 -->
             <Location @click="selectAddress" :address="address"/>
         </div>
 
@@ -36,7 +37,7 @@
 </template>
 
 <script>
-import Header from "../components/Header";
+import Header from "../components/Header"
 import Location from "../components/Location"
 export default {
     name: "Address",

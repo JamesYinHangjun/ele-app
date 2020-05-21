@@ -11,7 +11,7 @@
 </template>
 
 <script>
-// 星星长度
+// 星星长度(星星最长为5个星)
 const LENGTH = 5;
 // 星星对应的class, 全星 对应的 class
 const CLS_ON = "fa-star";
